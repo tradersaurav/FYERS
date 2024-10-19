@@ -1,0 +1,21 @@
+import openpyxl
+# Load the workbook and select the active sheet
+file_path = 'fyers.xlsx'
+workbook = openpyxl.load_workbook(file_path)
+sheet = workbook.active  # or workbook['Sheet1'] if you know the sheet name
+# Import the required module from the fyers_apiv3 package
+
+from fyers_apiv3 import fyersModel
+# Create a session model with the provided credentials
+session = fyersModel.SessionModel(
+client_id = sheet['A2'].value,
+secret_key = sheet['B2'].value,
+redirect_uri = sheet['C2'].value,
+response_type = "code",
+state = "bihar")
+
+# Generate the auth code using the session model
+response = session.generate_authcode()
+
+# Print the auth code received in the response
+print(response)
