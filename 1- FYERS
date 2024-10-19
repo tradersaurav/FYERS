@@ -1,0 +1,17 @@
+import pandas as pd
+
+# Create a dictionary with the data
+data = {
+    'client_id': ['NKSZ6X7TPS-100'],
+    'secret_key': ['PYJ39IIZXP'],
+    'redirect_uri': ['https://www.google.com']
+}
+
+# Convert the dictionary to a DataFrame
+df = pd.DataFrame(data)
+
+# Save the DataFrame to an Excel file
+file_path = 'fyers.xlsx'
+df.to_excel(file_path, index=False)
+
+print(file_path)
