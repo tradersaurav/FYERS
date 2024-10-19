@@ -1,0 +1,23 @@
+import pandas as pd
+
+def extract_auth_code():
+    url = input("Enter the URL: ")
+
+    # Replace the initial part of the URL to isolate the authorization code
+    new_url = url.replace("https://www.google.com/?s=ok&code=200&auth_code=", "")
+
+    # Remove the last "&state=None" if it exists
+    new_url = new_url.replace("&state=bihar", "")
+
+    # Return the extracted authorization code
+    return new_url
+
+# Example usage
+auth_code = extract_auth_code()
+print("Extracted Authorization Code:", auth_code)
+
+# Save the extracted code to an Excel file
+df = pd.DataFrame({'auth_code': [auth_code]})
+df.to_excel('auth_code.xlsx', index=False)
+
+print("Authorization code saved to auth_code.xlsx")
