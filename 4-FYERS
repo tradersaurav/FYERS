@@ -1,0 +1,63 @@
+import openpyxl
+from fyers_apiv3 import fyersModel
+
+# Load the workbook and select the active sheet
+file_path = 'auth_code.xlsx'
+workbook = openpyxl.load_workbook(file_path)
+sheet = workbook.active
+
+
+
+# Define your Fyers API credentials
+client_id = "NKSZ6X7TPS-100"
+secret_key = "PYJ39IIPXM"
+redirect_uri = "https://www.google.com"
+response_type = "code"
+grant_type = "authorization_code"
+
+# The authorization code received from Fyers after the user grants access
+auth_code = sheet['A2'].value
+
+# Create a session object to handle the Fyers API authentication and token generation
+session = fyersModel.SessionModel(
+    client_id=client_id,
+    secret_key=secret_key,
+    redirect_uri=redirect_uri,
+    response_type=response_type,
+    grant_type=grant_type
+)
+
+# Set the authorization code in the session object
+session.set_token(auth_code)
+
+# Generate the access token using the authorization code
+response = session.generate_token()
+
+# Print the response, which should contain the access token and other details
+print(response)
+
+# Extract the access token and refresh token from the response
+access_token = response.get('access_token')
+refresh_token = response.get('refresh_token')
+
+# Save the credentials in a new Excel file
+new_file_path = 'client_credentials.xlsx'
+new_workbook = openpyxl.Workbook()
+new_sheet = new_workbook.active
+
+# Write headers
+new_sheet['A1'] = 'client_id'
+new_sheet['B1'] = 'secret_key'
+new_sheet['C1'] = 'access_token'
+new_sheet['D1'] = 'refresh_token'
+
+# Write the credentials to the Excel sheet
+new_sheet['A2'] = client_id
+new_sheet['B2'] = secret_key
+new_sheet['C2'] = access_token
+new_sheet['D2'] = refresh_token
+
+# Save the new workbook
+new_workbook.save(new_file_path)
+
+print(f'Credentials saved to {new_file_path}')
