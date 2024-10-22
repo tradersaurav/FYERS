@@ -1,1 +1,6 @@
-
+{
+  "grant_type": "refresh_token",
+  "appIdHash": "c3efb1075ef2332b3a4ec7d44b0f05c1********************",
+  "refresh_token": "eyJ0eXAiOiJKV1***.eyJpc3MiOiJhcGkuZn***.5_Qpnd1nQXBw1T_wNJNFF***",
+  "pin": "****"
+}
