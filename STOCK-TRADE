@@ -1,0 +1,52 @@
+
+#NSE:SBIN-EQ-25@0&BUY/MARGIN
+input_str = input("TYPE HERE ")
+
+
+# Splitting the string based on the specified delimiters
+first_part = input_str.split('-')[0]  # Before the '-'
+second_part = input_str.split('-')[1].split('@')[0]  # After '-' and before '@'
+third_part = input_str.split('@')[1].split('&')[0]  # After '@' and before '&'
+fourth_part = input_str.split('&')[1].split('/')[0]  # After '&' and before '/'
+fifth_part = input_str.split('/')[1]  # After '/'            # Fourth part after '&'
+quantity = int(second_part)  # Ensure
+price = int(third_part)  # Ensure
+
+
+
+# Map transaction_type to BUY or SELL
+transaction_type = None
+if fourth_part.upper() == "BUY":
+    transaction_type = "1"  # If BUY, assign 1
+elif fourth_part.upper() == "SELL":
+    transaction_type = "-1"  # If SELL, assign -1
+side=int(transaction_type)
+
+
+
+# Step 4: Determine order_type and product_type based on price
+if price > 0:  # If price is greater than 0
+    order_type = "1"        # Limit Order
+     # Margin Product for limit orders
+else:  # If price is 0
+    order_type = "2"        # Market Order
+      # Intraday Product for market orders
+order=int(order_type)
+
+
+
+data = {
+    "symbol":first_part,
+    "qty":quantity,
+    "type":order,
+    "side":side,
+    "productType":fifth_part,
+    "limitPrice":price,
+    "stopPrice":0,
+    "validity":"DAY",
+    "disclosedQty":0,
+    "offlineOrder":False,
+    "orderTag":"tag1"
+}
+response = fyers.place_order(data=data)
+print(response)
