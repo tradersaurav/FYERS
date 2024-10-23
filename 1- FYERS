@@ -2,8 +2,8 @@ import pandas as pd
 
 # Create a dictionary with the data
 data = {
-    'client_id': ['NKSZ6X7TPS-100'],
-    'secret_key': ['PYJ39IIZXP'],
+    'client_id': ['NKSZ6X7T-100'],
+    'secret_key': ['PYJ39II'],
     'redirect_uri': ['https://www.google.com']
 }
 
